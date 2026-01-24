@@ -1,0 +1,132 @@
+================================================================================
+EXAM SCORE PREDICTION - ORDINARY LEAST SQUARES (OLS) REGRESSION
+Training Report
+================================================================================
+
+Training Date: 2026-01-24 18:03:44
+
+--------------------------------------------------------------------------------
+MODEL ARCHITECTURE
+--------------------------------------------------------------------------------
+Model Type: Ordinary Least Squares (OLS) Linear Regression
+Input Features: 23
+Total Parameters: 24
+Estimation Method: Least Squares
+
+Feature Coefficients:
+  const                         :      62.5630  (p=0.0000) ***
+  age                           :      -0.2621  (p=0.2464) 
+  study_hours                   :      13.4364  (p=0.0000) ***
+  class_attendance              :       5.9076  (p=0.0000) ***
+  internet_access               :       0.1198  (p=0.6028) 
+  sleep_hours                   :       2.1339  (p=0.0000) ***
+  sleep_quality                 :       3.9514  (p=0.0000) ***
+  facility_rating               :       3.1873  (p=0.0000) ***
+  exam_difficulty               :       0.1106  (p=0.6292) 
+  gender_female                 :      -0.2170  (p=0.1566) 
+  gender_male                   :       0.2536  (p=0.0929) 
+  gender_other                  :      -0.0373  (p=0.8033) 
+  course_b.com                  :      -0.1432  (p=0.4619) 
+  course_b.sc                   :       0.0197  (p=0.9220) 
+  course_b.tech                 :      -0.2564  (p=0.1825) 
+  course_ba                     :       0.1106  (p=0.5803) 
+  course_bba                    :      -0.0448  (p=0.8147) 
+  course_bca                    :       0.3982  (p=0.0390) *
+  course_diploma                :      -0.0928  (p=0.6253) 
+  study_method_coaching         :       2.5664  (p=0.0000) ***
+  study_method_group study      :      -0.7288  (p=0.0001) ***
+  study_method_mixed            :       0.6606  (p=0.0003) ***
+  study_method_online videos    :      -1.0496  (p=0.0000) ***
+  study_method_self-study       :      -1.4903  (p=0.0000) ***
+
+Significance codes: *** p<0.001, ** p<0.01, * p<0.05
+
+--------------------------------------------------------------------------------
+MODEL STATISTICS
+--------------------------------------------------------------------------------
+Training Samples: 2000
+Validation Samples: 500
+Degrees of Freedom (Residuals): 1979.0
+Degrees of Freedom (Model): 20.0
+
+R-squared: 0.7159
+Adjusted R-squared: 0.7130
+F-statistic: 249.3604
+Prob (F-statistic): 0.0000e+00
+AIC: 14948.5150
+BIC: 15066.1339
+
+--------------------------------------------------------------------------------
+TRAINING RESULTS
+--------------------------------------------------------------------------------
+Training MSE: 101.0263
+Training MAE: 8.0762
+Training R²: 0.7159
+
+Validation MSE: 95.8692
+Validation MAE: 7.8416
+Validation R²: 0.7458
+
+--------------------------------------------------------------------------------
+VARIANCE INFLATION FACTOR (VIF) - MULTICOLLINEARITY CHECK
+--------------------------------------------------------------------------------
+Feature                                 VIF
+--------------------------------------------------------------------------------
+const                                  1.00
+age                                    1.01
+study_hours                            1.01
+class_attendance                       1.01
+internet_access                        1.01
+sleep_hours                            1.01
+sleep_quality                          1.01
+facility_rating                        1.01
+exam_difficulty                        1.01
+gender_female                           inf (High)
+gender_male                             inf (High)
+gender_other                            inf (High)
+course_b.com                            inf (High)
+course_b.sc                             inf (High)
+course_b.tech                           inf (High)
+course_ba                               inf (High)
+course_bba                              inf (High)
+course_bca                              inf (High)
+course_diploma                          inf (High)
+study_method_coaching                   inf (High)
+study_method_group study                inf (High)
+study_method_mixed                      inf (High)
+study_method_online videos              inf (High)
+study_method_self-study                 inf (High)
+
+Note: VIF > 5 indicates potential multicollinearity issues
+
+--------------------------------------------------------------------------------
+EXAMPLE PREDICTIONS
+--------------------------------------------------------------------------------
+
+Training Set Example (Index 1481):
+  Actual Exam Score: 64.20
+  Predicted Exam Score: 62.86
+  Prediction Error: 1.34
+
+Test Set Example (Index 343):
+  Actual Exam Score: 35.90
+  Predicted Exam Score: 48.02
+  Prediction Error: 12.12
+
+Additional Test Set Examples (First 10):
+Index    Actual       Predicted    Error       
+--------------------------------------------------
+0        54.80        52.48        2.32        
+1        43.70        45.44        1.74        
+2        53.50        58.84        5.34        
+3        70.30        56.95        13.35       
+4        49.30        61.79        12.49       
+5        52.10        55.76        3.66        
+6        56.60        60.30        3.70        
+7        60.30        55.72        4.58        
+8        81.30        79.72        1.58        
+9        37.30        25.90        11.40       
+
+================================================================================
+END OF REPORT
+================================================================================
