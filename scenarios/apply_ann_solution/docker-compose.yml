@@ -1,0 +1,42 @@
+version: "3.0"
+services:
+  knowledge_base_ann:
+    image: khaleedm/knowledgebase_examscoreprediction:latest
+    volumes:
+       - ai_system:/tmp
+    command:
+    - sh
+    - "-c"
+    - |
+      rm -rf /tmp/knowledgeBase/ && mkdir -p /tmp/knowledgeBase/ && cp -r /tmp/knowledgeBase/ /tmp/;
+
+  activation_base_ann:
+    image: khaleedm/activationbase_examscoreprediction:latest
+    volumes:
+       - ai_system:/tmp
+    command:
+    - sh
+    - "-c"
+    - |
+      rm -rf /tmp/activationBase/ && mkdir -p /tmp/activationBase/ && cp -r /tmp/activationBase/ /tmp/;
+
+  code_base_ann:
+    # We use a TensorFlow image here because Busybox can't run Python/TensorFlow
+    image: tensorflow/tensorflow:latest
+    volumes:
+       - ai_system:/tmp
+    depends_on:
+      - "knowledge_base_ann"
+      - "activation_base_ann"
+    command:
+    - sh
+    - "-c"
+    - |
+      # 1. Sync the codebase files to the volume
+      # 2. Run the application script
+      pip install pandas # Ensure pandas is available in the tf container
+      python3 /tmp/codeBase/apply_ann.py
+
+volumes:
+  ai_system:
+    external: false

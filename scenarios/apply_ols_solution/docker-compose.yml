@@ -1,0 +1,39 @@
+version: "3.0"
+services:
+  knowledge_base_ols:
+    image: khaleedm/knowledgebase_examscoreprediction:latest
+    volumes:
+       - ai_system:/tmp
+    command:
+    - sh
+    - "-c"
+    - |
+      rm -rf /tmp/knowledgeBase/ && mkdir -p /tmp/knowledgeBase/ && cp -r /tmp/knowledgeBase/ /tmp/;
+
+  activation_base_ols:
+    image: khaleedm/activationbase_examscoreprediction:latest
+    volumes:
+       - ai_system:/tmp
+    command:
+    - sh
+    - "-c"
+    - |
+      rm -rf /tmp/activationBase/ && mkdir -p /tmp/activationBase/ && cp -r /tmp/activationBase/ /tmp/;
+
+  code_base_ols:
+    image: python:3.10-slim
+    volumes:
+       - ai_system:/tmp
+    depends_on:
+      - "knowledge_base_ols"
+      - "activation_base_ols"
+    command:
+    - sh
+    - "-c"
+    - |
+      pip install pandas scikit-learn
+      python3 /tmp/codeBase/apply_ols.py
+
+volumes:
+  ai_system:
+    external: false

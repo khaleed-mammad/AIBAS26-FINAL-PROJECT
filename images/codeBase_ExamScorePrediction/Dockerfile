@@ -1,6 +1,7 @@
 FROM busybox
-RUN mkdir -p /tmp/activationBase/
-# single row of data from Subgoal 2
-COPY activation_data.csv /tmp/activationBase/
-COPY README.md /tmp/activationBase/
+RUN mkdir -p /tmp/codeBase/
+COPY activation_data.csv /tmp/codeBase/
+COPY apply_ann.py /tmp/codeBase/
+COPY apply_ols.py /tmp/codeBase/
+COPY README.md /tmp/codeBase/
 CMD ["sh"]
