@@ -1,39 +1,28 @@
 services:
-  # 1. BRAIN: Use the one without "prediction" per your Hub
-  knowledge_base_ann:
-    image: khaleedm/knowledgebase_examscore:latest
+  knowledge:
+    platform: linux/amd64
+    image: khaleedm/knowledgebase_examscoreprediction
     volumes:
-       - ai_system:/tmp
-    command:
-    - sh
-    - "-c"
-    - "rm -rf /tmp/knowledgeBase/ && mkdir -p /tmp/knowledgeBase/ && cp -r /tmp/knowledgeBase/ /tmp/;"
+      - ai_system:/tmp
 
-  # 2. TRIGGER: This one DOES have "prediction" per your Hub
-  activation_base_ann:
-    image: khaleedm/activationbase_examscoreprediction:latest
+  activation:
+    platform: linux/amd64
+    image: khaleedm/activationbase_examscoreprediction
     volumes:
-       - ai_system:/tmp
-    command:
-    - sh
-    - "-c"
-    - "rm -rf /tmp/activationBase/ && mkdir -p /tmp/activationBase/ && cp -r /tmp/activationBase/ /tmp/;"
+      - ai_system:/tmp
 
-  # 3. ENGINE: This one DOES have "prediction" per your Hub
-  code_base_ann:
-    image: khaleedm/codebase_examscoreprediction:latest
+  code:
+    platform: linux/amd64
+    image: khaleedm/codebase_examscoreprediction
     volumes:
-       - ai_system:/tmp
+      - ai_system:/tmp
     depends_on:
-      - "knowledge_base_ann"
-      - "activation_base_ann"
-    command:
-    - sh
-    - "-c"
-    - |
-      pip install pandas tensorflow
-      python3 /tmp/codeBase/apply_ols.py
+      - knowledge
+      - activation
+    command: python3 /app/apply_ols.py
+    environment:
+      - PYTHONUNBUFFERED=1
 
 volumes:
   ai_system:
-    external: false
+    external: true

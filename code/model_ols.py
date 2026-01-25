@@ -10,10 +10,15 @@ from statsmodels.stats.outliers_influence import variance_inflation_factor
 import pickle
 
 # 1. LOAD DATA
-# During development, we point to our local files. 
-# Later, Docker will map these to /tmp/learningBase/
-train_df = pd.read_csv('../data/data_cleaning/training_data.csv')
-test_df = pd.read_csv('../data/data_cleaning/test_data.csv')
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(SCRIPT_DIR)
+
+# 1. LOAD DATA
+train_path = os.path.join(ROOT_DIR, 'data', 'data_cleaning', 'training_data.csv')
+test_path = os.path.join(ROOT_DIR, 'data', 'data_cleaning', 'test_data.csv')
+
+train_df = pd.read_csv(train_path)
+test_df = pd.read_csv(test_path)
 
 # Drop student_id (not a feature) and separate Target (exam_score)
 X_train = train_df.drop(columns=['exam_score'])
@@ -38,10 +43,9 @@ print(results.summary())
 print("="*80 + "\n")
 
 # 3. SAVE THE MODEL
-model_path = 'currentOlsSolution.pkl'
-with open(model_path, 'wb') as f:
+model_save_path = os.path.join(ROOT_DIR, 'currentOlsSolution.pkl')
+with open(model_save_path, 'wb') as f:
     pickle.dump(results, f)
-print(f"Model saved as {model_path}")
 
 # 4. GENERATE PREDICTIONS
 y_train_pred = results.predict(X_train_with_const)
@@ -57,7 +61,7 @@ test_mae = np.mean(np.abs(y_test - y_test_pred))
 test_r2 = 1 - (np.sum((y_test - y_test_pred)**2) / np.sum((y_test - y_test.mean())**2))
 
 # 5. DOCUMENTATION AND RESULTS
-output_dir = '../images/learningBase_ExamScorePrediction'
+output_dir = os.path.join(ROOT_DIR, 'images', 'learningBase_ExamScorePrediction')
 os.makedirs(output_dir, exist_ok=True)
 
 # Write comprehensive training report

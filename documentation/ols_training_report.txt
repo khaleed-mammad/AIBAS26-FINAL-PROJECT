@@ -3,7 +3,7 @@ EXAM SCORE PREDICTION - ORDINARY LEAST SQUARES (OLS) REGRESSION
 Training Report
 ================================================================================
 
-Training Date: 2026-01-24 18:03:44
+Training Date: 2026-01-25 11:26:41
 
 --------------------------------------------------------------------------------
 MODEL ARCHITECTURE
@@ -61,11 +61,11 @@ TRAINING RESULTS
 --------------------------------------------------------------------------------
 Training MSE: 101.0263
 Training MAE: 8.0762
-Training R²: 0.7159
+Training RÂ²: 0.7159
 
 Validation MSE: 95.8692
 Validation MAE: 7.8416
-Validation R²: 0.7458
+Validation RÂ²: 0.7458
 
 --------------------------------------------------------------------------------
 VARIANCE INFLATION FACTOR (VIF) - MULTICOLLINEARITY CHECK
@@ -103,15 +103,15 @@ Note: VIF > 5 indicates potential multicollinearity issues
 EXAMPLE PREDICTIONS
 --------------------------------------------------------------------------------
 
-Training Set Example (Index 1481):
-  Actual Exam Score: 64.20
-  Predicted Exam Score: 62.86
-  Prediction Error: 1.34
+Training Set Example (Index 1498):
+  Actual Exam Score: 53.30
+  Predicted Exam Score: 54.68
+  Prediction Error: 1.38
 
-Test Set Example (Index 343):
-  Actual Exam Score: 35.90
-  Predicted Exam Score: 48.02
-  Prediction Error: 12.12
+Test Set Example (Index 328):
+  Actual Exam Score: 100.00
+  Predicted Exam Score: 87.95
+  Prediction Error: 12.05
 
 Additional Test Set Examples (First 10):
 Index    Actual       Predicted    Error       

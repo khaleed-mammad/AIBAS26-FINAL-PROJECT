@@ -9,11 +9,16 @@ from datetime import datetime
 import seaborn as sns
 from scipy import stats
 
-# 1. LOAD DATA
-# During development, we point to our local files. 
-# Later, Docker will map these to /tmp/learningBase/
-train_df = pd.read_csv('../data/data_cleaning/training_data.csv')
-test_df = pd.read_csv('../data/data_cleaning/test_data.csv')
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(SCRIPT_DIR)
+
+# 1. LOAD DATA (Standardized)
+train_path = os.path.join(ROOT_DIR, 'data', 'data_cleaning', 'training_data.csv')
+test_path = os.path.join(ROOT_DIR, 'data', 'data_cleaning', 'test_data.csv')
+
+train_df = pd.read_csv(train_path)
+test_df = pd.read_csv(test_path)
+
 
 # Drop student_id (not a feature) and separate Target (exam_score)
 X_train = train_df.drop(columns=[ 'exam_score'])
@@ -23,12 +28,10 @@ y_test = test_df['exam_score']
 
 # 2. DEFINE THE ANN (The "Wiring")
 model = tf.keras.Sequential([
-    # Input layer: more neurons for better feature learning
     layers.Dense(128, activation='relu', input_shape=[X_train.shape[1]]),
     layers.BatchNormalization(),  # Stabilizes learning
     layers.Dropout(0.3),  # Prevents overfitting
     
-    # Deep hidden layers: learns increasingly complex patterns
     layers.Dense(96, activation='relu'),
     layers.BatchNormalization(),
     layers.Dropout(0.3),
@@ -49,8 +52,6 @@ optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
 model.compile(optimizer=optimizer, loss='mse', metrics=['mae', 'mse'])
 
 # 3. TRAINING
-# "epochs" is how many times the AI reads the data. 
-# We store results in 'history' to make the plots.
 early_stop = tf.keras.callbacks.EarlyStopping(
     monitor='val_loss', 
     patience=15, 
@@ -66,21 +67,20 @@ history = model.fit(
     verbose=1
 )
 
-# 4. SAVE THE MODEL (Required for Subgoal 6)
-model.save('currentAiSolution.h5')
-print("Model saved as currentAiSolution.h5")
+# 4. SAVE THE MODEL 
+model.save(os.path.join(ROOT_DIR, 'currentAiSolution.keras'))
+print("Model saved as currentAiSolution.keras")
 
 # 5. GENERATE PREDICTIONS FOR EXAMPLES
 y_train_pred = model.predict(X_train, verbose=0)
 y_test_pred = model.predict(X_test, verbose=0)
 
 # 6. DOCUMENTATION AND RESULTS
-# Create learningBase directory if it doesn't exist (for Docker compatibility)
-output_dir = '../images/learningBase_ExamScorePrediction'
+output_dir = os.path.join(ROOT_DIR, 'images', 'learningBase_ExamScorePrediction')
 os.makedirs(output_dir, exist_ok=True)
 
 # Write comprehensive training report
-report_path = os.path.join(output_dir, 'training_report.txt')
+report_path = os.path.join(output_dir, 'ann_training_report.txt')
 with open(report_path, 'w') as f:
     f.write("=" * 80 + "\n")
     f.write("EXAM SCORE PREDICTION - ARTIFICIAL NEURAL NETWORK\n")

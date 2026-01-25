@@ -3,12 +3,10 @@ import pandas as pd
 import numpy as np
 import os
 
-# 1. DEFINE PATHS (Standardized for the Docker Volume)
-MODEL_PATH = '/tmp/knowledgeBase/currentAiSolution.h5'
-ACTIVATION_DATA_PATH = '/tmp/activationBase/activation_data.csv'
+MODEL_PATH = '/Users/khaleed_mammad/Desktop/tmp/knowledgeBase/currentAiSolution.keras'
+ACTIVATION_DATA_PATH = '/Users/khaleed_mammad/Desktop/tmp/activationBase/activation_data.csv'
 
 def apply_model():    
-    # Check if files exist in the volume
     if not os.path.exists(MODEL_PATH):
         print(f"ERROR: Model not found at {MODEL_PATH}")
         return

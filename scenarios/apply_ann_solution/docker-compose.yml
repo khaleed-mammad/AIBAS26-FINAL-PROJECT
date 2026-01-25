@@ -1,38 +1,28 @@
 services:
-  knowledge_base_ann:
+  knowledge:
     platform: linux/amd64
-    image: khaleedm/knowledgebase_examscore:latest
+    image: khaleedm/knowledgebase_examscoreprediction
     volumes:
-       - ai_system:/tmp
-    command:
-    - sh
-    - "-c"
-    - "rm -rf /tmp/knowledgeBase/ && mkdir -p /tmp/knowledgeBase/ && cp -r /tmp/knowledgeBase/ /tmp/;"
+      - ai_system:/tmp
 
-  activation_base_ann:
+  activation:
     platform: linux/amd64
-    image: khaleedm/activationbase_examscoreprediction:latest
+    image: khaleedm/activationbase_examscoreprediction
     volumes:
-       - ai_system:/tmp
-    command:
-    - sh -c "rm -rf /tmp/activationBase/ && mkdir -p /tmp/activationBase/ && cp -r /tmp/activationBase/ /tmp/;"
+      - ai_system:/tmp
 
-
-  code_base_ann:
+  code:
     platform: linux/amd64
-    image: khaleedm/codebase_examscoreprediction:latest
+    image: khaleedm/codebase_examscoreprediction
     volumes:
-       - ai_system:/tmp
+      - ai_system:/tmp
     depends_on:
-      - "knowledge_base_ann"
-      - "activation_base_ann"
-    command:
-    - sh
-    - "-c"
-    - |
-      pip install pandas tensorflow
-      python3 /tmp/codeBase/apply_ann.py
+      - knowledge
+      - activation
+    command: python3 /app/apply_ann.py
+    environment:
+      - PYTHONUNBUFFERED=1
 
 volumes:
   ai_system:
-    external: false
+    external: true
