@@ -6,7 +6,7 @@ Junior Chair for Business Information Science, esp. AI-based Application Systems
 University of Potsdam.
 
 ## Overview
-Exam Score Prediction System using machine learning models deployed in Docker containers. The system compares ANN and OLS regression models for predicting student exam scores based on study habits, demographics, and environmental factors.
+Exam Score Prediction System using ANN and OLS models deployed in Docker containers. The system compares two regression approaches for predicting student exam scores based on study habits, demographics, and environmental factors.
 
 ## Workflow
 1. **Data Scraping**: Downloaded dataset from Kaggle using kagglehub API
@@ -39,18 +39,60 @@ The system uses a shared-volume approach where three containers communicate via 
 docker volume create ai_system
 ```
 
-2. Run predictions:
+2. Run OLS prediction:
 ```bash
 cd scenarios/apply_ols_solution
 docker-compose up --abort-on-container-exit code
 ```
 
+3. Run ANN prediction:
+```bash
+cd scenarios/apply_ann_solution
+docker-compose up --abort-on-container-exit code
+```
+
 ## Project Structure
 ```
-code/         - Python scripts (scraping, cleaning, training, inference)
-data/         - Raw and processed datasets
-images/       - Dockerfiles for container images
-scenarios/    - Docker Compose configurations
+AIBAS26-FINAL-PROJECT/
+├── code/
+│   ├── kaggle_data_prescrapping.py    - Download data from Kaggle
+│   ├── data_cleaning.py               - Preprocess and split data
+│   ├── model_ann.py                   - Train neural network
+│   ├── model_ols.py                   - Train linear regression
+│   ├── apply_ann.py                   - Run ANN inference
+│   └── apply_ols.py                   - Run OLS inference
+├── data/
+│   ├── data_scraping/                 - Raw downloaded data
+│   └── data_cleaning/                 - Processed train/test sets
+├── images/
+│   ├── activationBase_ExamScorePrediction/
+│   │   ├── activation_data.csv        - Input data for predictions
+│   │   └── Dockerfile
+│   ├── codeBase_ExamScorePrediction/
+│   │   ├── apply_ann.py               - Inference scripts for predictions
+│   │   ├── apply_ols.py
+│   │   └── Dockerfile
+│   ├── knowledgeBase_ExamScorePrediction/
+│   │   ├── currentAiSolution.keras    - Trained ANN model
+│   │   ├── currentOlsSolution.pkl     - Trained OLS model
+│   │   └── Dockerfile
+│   └── learningBase_ExamScorePrediction/
+│       ├── training_data.csv          - Training/test data
+│       ├── test_data.csv
+│       └── Dockerfile
+├── scenarios/
+│   ├── apply_ols_solution/
+│   │   └── docker-compose.yml         - OLS deployment config
+│   └── apply_ann_solution/
+│       └── docker-compose.yml         - ANN deployment config
+├── documentation/
+│   ├── ann_training_report.txt        - Results of running model_ann.py
+│   └── ols_training_report.txt        - Results of running model_ols.py
+└── visualizations/                    - Plots of data and model performance
+    ├── ann_diagnostic_plots.pdf
+    ├── ann_scatter_plots.pdf
+    ├── ols_diagnostic_plots.png
+    └── ols_scatter_plots.png
 ```
 
 ## Authors
