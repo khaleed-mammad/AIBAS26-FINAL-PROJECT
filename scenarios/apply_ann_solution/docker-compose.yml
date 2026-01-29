@@ -25,4 +25,4 @@ services:
 
 volumes:
   ai_system:
-    external: true
+    driver: local

@@ -32,25 +32,20 @@ The system uses a shared-volume approach where three containers communicate via 
 3. Code container waits for dependencies, then loads models/data and runs inference
 4. Results are output to console, then containers stop
 
+
 ## Quick Start
 
-1. Create the shared volume:
+Run from project root directory:
+
+1. Run OLS prediction:
 ```bash
-docker volume create ai_system
+docker-compose -f scenarios/apply_ols_solution/docker-compose.yml up --build --abort-on-container-exit code
 ```
 
-2. Run OLS prediction:
+2. Run ANN prediction:
 ```bash
-cd scenarios/apply_ols_solution
-docker-compose up --abort-on-container-exit code
+docker-compose -f scenarios/apply_ann_solution/docker-compose.yml up --build --abort-on-container-exit code
 ```
-
-3. Run ANN prediction:
-```bash
-cd scenarios/apply_ann_solution
-docker-compose up --abort-on-container-exit code
-```
-
 ## Project Structure
 ```
 AIBAS26-FINAL-PROJECT/
