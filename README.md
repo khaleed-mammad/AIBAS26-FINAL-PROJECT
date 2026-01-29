@@ -9,14 +9,14 @@ University of Potsdam.
 Exam Score Prediction System using ANN and OLS models deployed in Docker containers. The system compares two regression approaches for predicting student exam scores based on study habits, demographics, and environmental factors.
 
 ## Workflow
-1. **Data Scraping**: Downloaded dataset from Kaggle using kagglehub API
+1. **Data Scraping**: Downloaded dataset from Kaggle using kagglehub API into .md file and then read from .md.
 2. **Data Cleaning**: Z-score normalization, categorical encoding (ordinal + one-hot), train/test split
 3. **Model Training**: 
    - **ANN**: 4-layer neural network (128→96→64→32 neurons) with batch normalization and dropout
      - Training: Adam optimizer, early stopping after 64 epochs
      - Performance: Validation MAE = 8.48
    - **OLS**: Linear regression with 24 parameters
-     - Performance: Test MAE = 10.86, R² = 0.759
+     - Performance: Test MAE = 7.84
 4. **Docker Deployment**: 3-container architecture for model inference
 
 ## Docker Architecture
