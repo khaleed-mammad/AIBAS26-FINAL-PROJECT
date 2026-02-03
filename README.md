@@ -46,6 +46,9 @@ docker-compose -f scenarios/apply_ols_solution/docker-compose.yml up --build --a
 ```bash
 docker-compose -f scenarios/apply_ann_solution/docker-compose.yml up --build --abort-on-container-exit code
 ```
+Expected Output
+The final result, the exam score prediction of the chosen model based on the activation data, will be displayed directly in the terminal.
+
 ## Project Structure
 ```
 AIBAS26-FINAL-PROJECT/
